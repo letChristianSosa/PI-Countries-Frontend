@@ -39,7 +39,7 @@ export function getCountries(order){
      if(order){
           return async function(dispatch){
                try {
-                    const respuesta = await axios.get(`http://localhost:3001/countries/?order=${order}`);
+                    const respuesta = await axios.get(`https://powerful-tundra-88892.herokuapp.com/countries/?order=${order}`);
                     const resultado = respuesta.data;
                     dispatch(receiveCountries(resultado));    
                } catch (error) {
@@ -50,7 +50,7 @@ export function getCountries(order){
      }else{
           return async function(dispatch){
                try {
-                    const respuesta = await axios.get(`http://localhost:3001/countries/`)
+                    const respuesta = await axios.get(`https://powerful-tundra-88892.herokuapp.com/countries/`)
                     const resultado = respuesta.data;
                     dispatch(receiveCountries(resultado));
                } catch (error) {
@@ -63,7 +63,7 @@ export function getCountries(order){
 export function getCountryName(name){
      return async function(dispatch){
           try {
-               const respuesta = await axios.get(`http://localhost:3001/countries/?name=${name}`)
+               const respuesta = await axios.get(`https://powerful-tundra-88892.herokuapp.com/countries/?name=${name}`)
                const resultado = respuesta.data;
                if(resultado === null || resultado.length > 1){
                     dispatch(receiveCountries(resultado))
@@ -80,7 +80,7 @@ export function getCountryName(name){
 export function getCountryId(id){
      return async function(dispatch){
           try {
-               const respuesta = await axios.get(`http://localhost:3001/countries/${id}`)
+               const respuesta = await axios.get(`https://powerful-tundra-88892.herokuapp.com/countries/${id}`)
                const resultado = respuesta.data;
                dispatch(receiveCountryID(resultado))
           } catch (error) {
