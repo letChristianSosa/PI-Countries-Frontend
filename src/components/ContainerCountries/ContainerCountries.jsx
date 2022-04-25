@@ -28,12 +28,15 @@ export default function ContainerCountries() {
   // Al crearse, busca todos los countries y actualiza el componente cuando se actualiza el state de country, order o continent
   // Si el state country tiene algo, se despacha la busqueda por el country escrito.
   // O busca todos los countries
-  useEffect(()=>{      
-    if(country){
-      dispatch(getCountryName(country));
-    }else{
-      dispatch(getCountries(order));
-    }
+  useEffect(()=>{
+    const obtenerCountries = () => {
+      if(country){
+        dispatch(getCountryName(country));
+      }else{
+        dispatch(getCountries(order));
+      }
+    }      
+    obtenerCountries();    
   },[country, order, continent]);
   
   // funcion que despacha el cambio de continente
@@ -76,10 +79,10 @@ export default function ContainerCountries() {
 
       {/* Div que contiene todos los countries */}
       <div className={`${s.containerCards}`}>
-        {countries.length > 0 ? countries.map((country, index) =>{
+        {countries.length ? countries.map((country, index) =>{
         // Se crea un CardCountry por cada country en el state. Si es la pagina 1, solo muestra 9 countries
-        if(actualPage === 1 & index <9){
-          return (<CardCountry 
+        if(actualPage === 1 & index <9)
+          return <CardCountry 
             key={country.id} 
             id = {country.id}
             flag={country.flag}
@@ -87,11 +90,10 @@ export default function ContainerCountries() {
             name={country.nameSpanish}
             continent={country.continent}  
             population={country.population}      
-          />)
-        }
-        else if(actualPage !== 1 && index >= ((actualPage-1)*10)-1 && (index < (actualPage*10)-1)){
+          />        
+        if(actualPage !== 1 && index >= ((actualPage-1)*10)-1 && (index < (actualPage*10)-1))
           // Se crea un CardCountry por cada country en el state. Si no es la pagina 1, muestra 10 countries
-          return (<CardCountry 
+          return <CardCountry 
             key={country.id} 
             id = {country.id}
             flag={country.flag}
@@ -99,10 +101,13 @@ export default function ContainerCountries() {
             name={country.nameSpanish}
             continent={country.continent}  
             population={country.population}      
-          />)}}): 
+          />
+        }
+          ) : ( 
           <div className={s.noHay}>
             <p>No hay paises. Intenta otra busqueda.</p>
-          </div>}
+          </div>
+          )}
       </div>
 
       {/* Div que contiene el paginador */}
